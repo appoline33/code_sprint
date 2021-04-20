@@ -44,5 +44,9 @@ export default {
   build: {
   },
 
+<<<<<<< HEAD
 }
   
+=======
+}
+>>>>>>> 4b83acd50a6b6c82739f07acaab6b217e7c0d528
