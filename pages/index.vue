@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <Logo />
+      <card-establishment></card-establishment>
       <h1 class="title">
         DrinklyFront
       </h1>
@@ -28,10 +29,21 @@
 </template>
 
 <script>
-export default {}
+
+// Components cardEstablishment (Appoline)
+import cardEstablishment from "../components/cardEstablishment.vue";
+
+export default {
+  components: {
+    cardEstablishment,
+  }
+}
+
 </script>
 
-<style>
+<style lang="scss"> 
+@import './assets/scss/tools/variables';
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
