@@ -5,6 +5,8 @@
         <h2>A la une</h2>
         <a href="#">Tout voir</a>
       </div>
+      <Radio />
+      <Quantity />
       <div class="block_listing">
         <VueSlickCarousel v-bind="settings">
           <div>
@@ -13,9 +15,7 @@
         </VueSlickCarousel>
       </div>
     </div>
-      <SmallestCard></SmallestCard>
-      <Button></Button>
-      <CartProduct></CartProduct>
+    <SmallestCard></SmallestCard>
   </div>
 </template>
 
@@ -24,7 +24,8 @@ import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import SmallestCard from "../components/SmallestCard";
 import cardEstablishment from "../components/cardEstablishment.vue";
-import Line from '../components/CardProduct.vue';
+import Radio from "../components/Radio.vue";
+import Quantity from "../components/Quantity.vue";
 export default {
   data() {
     return {
@@ -44,7 +45,8 @@ export default {
     SmallestCard,
     cardEstablishment,
     VueSlickCarousel,
-    Line,
+    Radio,
+    Quantity,
   },
 }
 
