@@ -1,48 +1,25 @@
-<<<<<<< HEAD
 :root {
   //Couleurs
-  --background: #1C1F2A; 
-  --backgroud-note:#33A194;
-  --textGray: #777D97;
+  --background: #1C1F2A;
+  --reviews-good:#33A194;
+  --reviews-medium:#D19855;
+  --reviews-bad:#B74C3E;
+  --textGray: #8E93AB;
 
   //Espacements
   --space-xsmall: 4px;
-  --space-small: 8px; 
+  --space-small: 8px;
   --space-medium: 16px;
   --space-large: 24px;
   --space-xlarge: 48px;
 
   //Typographies
   --text: 'Geomanist';
-  --title: 'Gilroy'; 
+  --title: 'Gilroy';
 
   //Taille de police
-  --font-small: 12px;
-  --font-body: 16px;
+  --font-small: 14px;
+  --font-body: 18px;
   --font-title: 22px;
-=======
-:root{
-    // Couleurs
-    --background: #1C1F2A;
-    --background-note: #33A194;
-    --textGray: #777D97;
-
-
-    // Epacements
-    --space-xsmall: 4px;
-    --space-small: 8px;
-    --space-medium: 16px;
-    --space-large: 24px;
-    --space-xlarge: 48px;
-
-    // Typographies
-    --text: 'Geomanist';
-    --title: 'Gilroy';
-
-    // Taille de police
-    --font-small: 12px;
-    --font-body: 16px;
-    --font-title: 22px;
->>>>>>> 4b83acd50a6b6c82739f07acaab6b217e7c0d528
 
 }

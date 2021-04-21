@@ -1,6 +1,6 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -44,9 +44,4 @@ export default {
   build: {
   },
 
-<<<<<<< HEAD
 }
-  
-=======
-}
->>>>>>> 4b83acd50a6b6c82739f07acaab6b217e7c0d528

@@ -1,81 +1,76 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-<<<<<<< HEAD
-      <SmallestCard></SmallestCard>
-
-
-=======
-      <card-establishment></card-establishment>
->>>>>>> 4b83acd50a6b6c82739f07acaab6b217e7c0d528
-      <h1 class="title">
-        DrinklyFront
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div class="app_layout">
+    <div class="establishment_block">
+      <div class="head_block">
+        <h2>A la une</h2>
+        <a href="#">Tout voir</a>
+      </div>
+      <div class="block_listing">
+        <VueSlickCarousel v-bind="settings">
+          <div>
+            <card-establishment/>
+          </div>
+        </VueSlickCarousel>
       </div>
     </div>
+      <SmallestCard></SmallestCard>
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import SmallestCard from "../components/SmallestCard";
-
+import cardEstablishment from "../components/cardEstablishment.vue";
 export default {
+  data() {
+    return {
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+        infinite: false,
+        arrows: false,
+        dots: false,
+        centerMode: true,
+        centerPadding: '20px'
+      }
+    }
+  },
   components: {
     SmallestCard,
-  }
-=======
-
-// Components cardEstablishment (Appoline)
-import cardEstablishment from "../components/cardEstablishment.vue";
-
-export default {
-  components: {
     cardEstablishment,
-  }
+    VueSlickCarousel,
+  },
 }
 
 </script>
-
-<style lang="scss"> 
-@import './assets/scss/tools/variables';
-
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
->>>>>>> 4b83acd50a6b6c82739f07acaab6b217e7c0d528
-}
-</script>
-
-
 
 <style lang="scss">
 @import './assets/scss/tools/variables';
 
-.title {
-  color: var(--textGray);
+.app_layout {
+  padding: 0px 16px;
+  width: 100vw;
+  overflow-x: hidden;
 }
-
+.establishment_block {
+  margin-bottom: var(--space-xlarge);
+  .head_block {
+    margin-bottom: var(--space-large);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2 {
+      font-size: var(--font-title);
+      font-family: var(--title);
+      color:white;
+      font-weight: bold;
+    }
+    a {
+      font-size: var(--font-small);
+      color:var(--textGray);
+    }
+  }
+}
 </style>

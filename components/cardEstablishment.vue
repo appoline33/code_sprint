@@ -18,6 +18,7 @@
             <p>à 3km - Bières - Vin</p>
         </div>
 
+      <Badge />
         <!-- Note du bar -->
         <div class="cardEstablishment_note">
             <span>7.9</span>
@@ -33,8 +34,13 @@
 
 <!-- Script vue.js -->
 <script>
+import Badge from "./Badge";
 
-    export default{}
+    export default{
+      components: {
+        Badge,
+      }
+    }
 
 </script>
 
@@ -43,15 +49,11 @@
 <style lang="scss" scoped>
 @import './assets/scss/tools/variables';
 
-// Mise en forme du body
-template{
-    background-color: var(--background);
-}
-
 // Mise en forme de la carte
 .cardEstablishment{
-    width: 70%;
+    width: 100%;
     height: 233px;
+    overflow: hidden;
     // left: 19px;
     // top: 132px;
 }
@@ -63,7 +65,7 @@ template{
     // top: 0%;
     bottom: 18.45%;
 
-        img{ 
+        img{
             width: 100%;
             height: 190px;
             border-radius: 4px;
@@ -85,7 +87,7 @@ template{
         //     height: 35px;
         //     left: 0px;
         //     top: 198px;
-            
+
             // display: flex;
             // flex-direction: column;
             // align-items: flex-start;
@@ -160,13 +162,13 @@ template{
         //         text-align: right;
         //         color: white;
         //     }
-            
+
         // }
 
 }
 
 
-</style> 
+</style>
 
 <!-- Déclarer une variable en css
 color : var(--textGray); -->
