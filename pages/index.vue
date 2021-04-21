@@ -14,6 +14,8 @@
       </div>
     </div>
       <SmallestCard></SmallestCard>
+      <Button></Button>
+      <CartProduct></CartProduct>
   </div>
 </template>
 
@@ -22,6 +24,7 @@ import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import SmallestCard from "../components/SmallestCard";
 import cardEstablishment from "../components/cardEstablishment.vue";
+import Line from '../components/CardProduct.vue';
 export default {
   data() {
     return {
@@ -41,6 +44,7 @@ export default {
     SmallestCard,
     cardEstablishment,
     VueSlickCarousel,
+    Line,
   },
 }
 
