@@ -5,9 +5,14 @@
 <div class="cardEstablishment">
 
     <!-- Image du composannt -->
+    <!-- <div class="cardEstablishment_image">
+        <img :src= "thumbnails[0].path" alt="Image du bar">
+    </div> -->
+
     <div class="cardEstablishment_image">
-        <img src="https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?cs=srgb&dl=pexels-chris-f-1283219.jpg&fm=jpg" alt="Image du bar">
+      {{ thumbnails }}
     </div>
+
 
     <!-- Description sous l'image -->
     <div class="cardEstablishment_description">
@@ -15,17 +20,21 @@
         <!-- Informations du bar -->
         <div class="cardEstablishment_title">
             <!-- Nom du bar -->
-            <h2>Nom du bar</h2>
+            <h2>{{name}}</h2>
             <!-- Localisation / Spécialités -->
             <p>à 3km - Bières - Vin</p>
         </div>
 
     <!-- Badge correspond au composant affichant la note du bar en question -->
-      <Badge /> 
+      <Badge 
+        :rating=rating
+      /> 
 
     </div> 
 
 </div>
+
+
 
 </template>
 
@@ -33,8 +42,11 @@
 <!-- Script vue.js -->
 <script>
 
-    export default{}
+    export default{
+        props: ['name', 'rating', 'thumbnails'],
+    }
     import Badge from "./Badge";
+
 
 </script>
 

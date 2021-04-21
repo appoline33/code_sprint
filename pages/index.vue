@@ -8,9 +8,18 @@
       <Radio />
       <Quantity />
       <div class="block_listing">
-        <VueSlickCarousel v-bind="settings">
-          <div>
-            <card-establishment/>
+        <VueSlickCarousel v-bind="settings" v-if="establishments.length">
+          <div v-for= "item in establishments">
+            <!-- {{item.name}}
+            {{item.thumbnails}}
+            {{item.description}}
+            {{item.rating}} -->
+
+            <card-establishment 
+              :name="item.name"
+              :rating="item.rating"
+              :thumbnails="item.thumbnails"
+            />
           </div>
         </VueSlickCarousel>
       </div>
@@ -26,9 +35,12 @@ import SmallestCard from "../components/SmallestCard";
 import cardEstablishment from "../components/cardEstablishment.vue";
 import Radio from "../components/Radio.vue";
 import Quantity from "../components/Quantity.vue";
+import axios from 'axios';
 export default {
   data() {
     return {
+      establishments: ['name', 'thumbnails', 'description', 'rating'],
+
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -48,7 +60,31 @@ export default {
     Radio,
     Quantity,
   },
+mounted() {
+    axios({
+      url: 'http://127.0.0.1:8000/graphql',
+      method: 'post',
+      data: {
+        query: `
+          {
+            establishments{
+              name
+              thumbnails{
+                path
+                order
+              }
+              description
+              rating
+            }
+          }
+              `
+      },
+    }).then((result) => {
+      this.establishments = result.data.data.establishments;
+    });
+  } 
 }
+
 
 </script>
 

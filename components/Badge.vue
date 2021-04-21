@@ -1,12 +1,12 @@
 <template>
   <div class="badge-wrapper">
-    <span class="badge">7,9</span>
+    <span class="badge">{{rating}}</span>
   </div>
 </template>
 
 <script>
 export default {
-  //
+  props: ['rating'],
 }
 </script>
 
