@@ -17,7 +17,7 @@
     </div>
     <SmallestCard></SmallestCard>
   </div>
-</template>
+</template>  
 
 <script>
 import VueSlickCarousel from 'vue-slick-carousel'
