@@ -5,14 +5,10 @@
 <div class="cardEstablishment">
 
     <!-- Image du composannt -->
-    <!-- <div class="cardEstablishment_image">
-        <img :src= "thumbnails[0].path" alt="Image du bar">
-    </div> -->
-
+    <!-- {{thumbnail}} -->
     <div class="cardEstablishment_image">
-      {{ thumbnails }}
+        <img :src="thumbnail.path" :alt="'Image du bar : ' + name">
     </div>
-
 
     <!-- Description sous l'image -->
     <div class="cardEstablishment_description">
@@ -21,8 +17,12 @@
         <div class="cardEstablishment_title">
             <!-- Nom du bar -->
             <h2>{{name}}</h2>
-            <!-- Localisation / Spécialités -->
-            <p>à 3km - Bières - Vin</p>
+            <!-- Localisation -->
+            <span></span>
+            <!-- Tags : correspond aux "spécialités du bar" -->
+            <div v-for= "tags in tags">
+                <span>{{tags.name}}</span>
+            </div>
         </div>
 
     <!-- Badge correspond au composant affichant la note du bar en question -->
@@ -43,7 +43,8 @@
 <script>
 
     export default{
-        props: ['name', 'rating', 'thumbnails'],
+        // Récupération des paramètres définis dans index.vue
+        props: ['name', 'rating', 'thumbnail', 'long', 'lat', 'tags'],
     }
     import Badge from "./Badge";
 

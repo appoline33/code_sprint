@@ -8,20 +8,38 @@
       <Radio />
       <Quantity />
       <div class="block_listing">
-        <VueSlickCarousel v-bind="settings" v-if="establishments.length">
-          <div v-for= "item in establishments">
-            <!-- {{item.name}}
-            {{item.thumbnails}}
-            {{item.description}}
-            {{item.rating}} -->
+        <VueSlickCarousel v-bind="settings" v-if="establishmentsFeatured.length">
+          <div v-for= "item in establishmentsFeatured">
+            <!-- {{establishmentsFeatured}} -->
 
+            <!-- Définition des paramètres à afficher dans le carrousel de card-establishment -->
             <card-establishment 
               :name="item.name"
               :rating="item.rating"
-              :thumbnails="item.thumbnails"
+              :thumbnail="item.thumbnail"
+              :lat="item.lat"
+              :long="item.long"
+              :tags="item.tags"
             />
           </div>
-        </VueSlickCarousel>
+
+        <!-- Second carrousel pour moods -->
+        <div class="block_listing">
+        <VueSlickCarousel v-bind="settings" v-if="establishmentsMoods.length">
+          <div v-for= "moods in establishmentsMoods">
+            <!-- {{establishmentsMoods}} -->
+
+            <!-- Définition des paramètres à afficher dans le carrousel establishmentMoods -->
+            <card-establishment 
+              :name="moods.name"
+              :rating="moods.rating"
+              :thumbnail="moods.thumbnail"
+              :lat="moods.lat"
+              :long="moods.long"
+              :tags="moods.tags"
+            />
+          </div>
+
       </div>
     </div>
     <SmallestCard></SmallestCard>
@@ -39,7 +57,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      establishments: ['name', 'thumbnails', 'description', 'rating'],
+      establishmentsFeatured: [],
+      establishmentsMoods: [],
 
       settings: {
         slidesToShow: 1,
@@ -61,28 +80,18 @@ export default {
     Quantity,
   },
 mounted() {
-    axios({
-      url: 'http://127.0.0.1:8000/graphql',
-      method: 'post',
-      data: {
-        query: `
-          {
-            establishments{
-              name
-              thumbnails{
-                path
-                order
-              }
-              description
-              rating
-            }
-          }
-              `
-      },
-    }).then((result) => {
-      this.establishments = result.data.data.establishments;
-    });
-  } 
+    // cardEstablishment
+    axios.get('http://localhost:8000/api/establishments/featured')
+      .then((response) => {
+        this.establishmentsFeatured = response.data
+      })
+
+  // moods
+    axios.get('http://localhost:8000/api/establishments/moods')
+      .then((response) => {
+        this.establishmentsMoods = response.data
+      })
+  }
 }
 
 
