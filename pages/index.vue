@@ -22,6 +22,7 @@
               :tags="item.tags"
             />
           </div>
+            </VueSlickCarousel>
 
         <!-- Second carrousel pour moods -->
         <div class="block_listing">
@@ -39,10 +40,12 @@
               :tags="moods.tags"
             />
           </div>
+            </VueSlickCarousel>
 
       </div>
     </div>
     <SmallestCard></SmallestCard>
+    </div>
   </div>
 </template>  
 
@@ -87,12 +90,12 @@ mounted() {
       })
 
   // moods
-    axios.get('http://localhost:8000/api/establishments/moods')
-      .then((response) => {
-        this.establishmentsMoods = response.data
-      })
-  }
-}
+//     axios.get('http://localhost:8000/api/establishments/moods')
+//       .then((response) => {
+//         this.establishmentsMoods = response.data
+//       })
+//   }
+// }
 
 
 </script>
