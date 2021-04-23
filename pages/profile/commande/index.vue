@@ -1,18 +1,13 @@
 <template>
   <div class="listing_orders">
     <CardOrder v-for="order in orders"
-    establishment="Grizzly"
-    :date="order.date"
-    :status="order.status"
+      :thumbnail="order.establishment.thumbnail.path"
+      :establishment="order.establishment.name"
+      :date="order.date"
+      :status="order.status"
+      :id="order.id"
     />
-      <div class="roads_path">
-      <h2>Drink' Road</h2>
-      <p>Cartographie de vos différentes commandes</p>
     </div>
-
-  
-     
-  </div>
 </template>
 
 <script>
@@ -30,9 +25,10 @@ export default {
     CardOrder,
   },
   mounted() {
-    axios.get('http://127.0.0.1:8000/api/user/antoine.bellment@gmail.com/orders')
+    axios.get('http://127.0.0.1:8000/api/user/' + this.$store.state.userID + '/orders')
       .then((response) => {
       this.orders = response.data
+        this.$store.commit('changeOrderNumber', response.data.length)
       })
   },
 }
@@ -46,4 +42,3 @@ export default {
   padding: 0px 16px;
 }
 </style>
-  

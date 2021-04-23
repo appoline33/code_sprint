@@ -2,7 +2,7 @@
   <div>
     <transition name="fade">
       <header class="topbar" v-if="!$store.state.topbarSticky">
-        <div class="back">
+        <div class="back" @click="goBack()">
           <svg width="24" height="10" viewBox="0 0 24 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.23289 0.190785C4.49385 -0.0663038 4.91381 -0.0631698 5.1709 0.197785C5.42799 0.458739 5.42485 0.878696 5.1639 1.13578L2.2819 3.97979H23.3369C23.7033 3.97979 24.0004 4.27684 24.0004 4.64328C24.0004 5.00973 23.7033 5.30679 23.3369 5.30679H2.2799L5.1619 8.15078C5.3307 8.31709 5.39797 8.56082 5.33834 8.79017C5.27872 9.01951 5.10127 9.19963 4.87284 9.26267C4.64441 9.32571 4.3997 9.26209 4.2309 9.09578L0.197895 5.11578C0.0712872 4.99116 -7.62939e-06 4.82094 -7.62939e-06 4.64328C-7.62939e-06 4.46563 0.0712872 4.29541 0.197895 4.17078L4.23289 0.190785Z" fill="white"/>
           </svg>
@@ -18,17 +18,17 @@
             <path d="M52.0205 20.1429H55.1647L61.1765 5.2409H58.0124L55.5207 11.478L52.8708 5.2409H49.6078L54.0178 15.1887L52.0205 20.1429Z" fill="white"/>
           </svg>
         </div>
-    </header>
+      </header>
     </transition>
     <transition name="fade">
-      <header class="topbar" v-if="$store.state.topbarSticky" style="background:url('https://images.unsplash.com/photo-1618844481346-f53026596f06?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center center">
+      <header class="topbar" v-if="$store.state.topbarSticky" :style="'background:url('+ $store.state.establishmentThumbnail +') center center'">
         <div class="mask">
           <div class="back">
             <svg width="24" height="10" viewBox="0 0 24 10" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M4.23289 0.190785C4.49385 -0.0663038 4.91381 -0.0631698 5.1709 0.197785C5.42799 0.458739 5.42485 0.878696 5.1639 1.13578L2.2819 3.97979H23.3369C23.7033 3.97979 24.0004 4.27684 24.0004 4.64328C24.0004 5.00973 23.7033 5.30679 23.3369 5.30679H2.2799L5.1619 8.15078C5.3307 8.31709 5.39797 8.56082 5.33834 8.79017C5.27872 9.01951 5.10127 9.19963 4.87284 9.26267C4.64441 9.32571 4.3997 9.26209 4.2309 9.09578L0.197895 5.11578C0.0712872 4.99116 -7.62939e-06 4.82094 -7.62939e-06 4.64328C-7.62939e-06 4.46563 0.0712872 4.29541 0.197895 4.17078L4.23289 0.190785Z" fill="white"/>
             </svg>
           </div>
-          <h1>Grizzly Pub</h1>
+          <h1>{{this.$store.state.establishmentName }}</h1>
         </div>
       </header>
     </transition>
@@ -62,6 +62,9 @@ export default {
       } else {
         this.showRestrict = true
       }
+    },
+    goBack() {
+      return this.$router.back()
     }
   }
 }
@@ -82,6 +85,7 @@ export default {
   width: 100vw;
   padding: 0 16px;
   transform: translateY(0);
+  z-index: 999;
   .back {
     width: 40px;
     height: 100%;

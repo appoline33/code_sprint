@@ -1,22 +1,66 @@
 <template>
   <div class="smallest_card">
     <div class="card_thumbnail">
-      <img src=thumbnails alt="Image du bar">
+      <img :src="thumbnail.path" :alt="type === 'establishment' ? 'Image du bar: ' : 'Image du produit: ' + name">
     </div>
     <div class="card_datas">
-      <Badge />
+      <Badge :rating="rating" v-if="type === 'establishment'"/>
       <h3>{{name}}</h3>
-      <p>{{description}}</p>
-      <p>{{price}}</p>
+      <span v-if="type === 'establishment' ">{{ distanceEstablishment | kilometers }} -</span>
+      <span v-for="(tag, index) in tags">
+        <span>{{tag.name}}</span><span v-if="index+1 < tags.length">, </span>
+      </span>
+      <p v-if="type === 'product'">{{description}}</p>
+      <p v-if="type === 'product'">{{price | price}}</p>
     </div>
   </div>
 </template>
 <script>
+// Fait par Juliette
 import Badge from "./Badge";
+import turf from "turf";
 export default  {
-    props:['name', 'thumbnail', 'price', 'description'],
+  props:['name', 'thumbnail', 'price', 'description','type', 'rating','tags', 'long', 'lat'],
   components: {
     Badge,
+  },
+  data() {
+    return {
+      distanceEstablishment: ''
+    }
+  },
+  created() {
+    if (typeof global.navigator === 'undefined') global.navigator = {};
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          var from = {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [position.coords.longitude, position.coords.latitude]
+            }
+          };
+          var to = {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [this.$props.long, this.$props.lat]
+            }
+          };
+          this.distanceEstablishment = turf.distance(from, to, 'kilometers').toFixed([2]);
+        }
+      );
+    }
+  },
+
+  filters: {
+    kilometers: function (value) {
+      return 'à ' + value + ' km'
+    },
+    price: function(value) {
+      return value + ' €'
+    }
   }
 }
 </script>
@@ -42,6 +86,8 @@ export default  {
     height: 100px;
     img {
       object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
   }
   .card_datas {

@@ -7,8 +7,7 @@
         </svg>
       </div>
       <div class="title-bar">
-        <h1>Commandes</h1>
-        <span>{{this.$store.state.orderNumbers}} au total</span>
+        <h1>Profile</h1>
       </div>
     </header>
     <Nuxt />

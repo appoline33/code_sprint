@@ -1,12 +1,11 @@
 <template>
  <div>
-
-   <div class="header_establishment">
+ <div class="header_establishment">
 <VueSlickCarousel v-bind="settings" v-if="establishment.thumbnails">
   <div v-for="thumbnail in establishment.thumbnails"><img :src="thumbnail.path" ></div>
-</VueSlickCarousel> 
+</VueSlickCarousel>
    </div>
-  
+
     <div class="establishment_head">
      <h2>{{establishment.name}}</h2>
      <span v-for="tag in establishment.tags">
@@ -21,24 +20,26 @@
        </h2>
      </div>
      <div class="block_listing">
-       
- <smallest-card v-for="product in category.products"
-      :name="product.name"
-      :thumbnail="product.thumbnail"
-      :price="product.price"
-      :description="product.description"/>
-     
 
-    
+   <nuxt-link v-for="product in category.products"
+              :to="'/bars/' + $route.params.slug + '/produits/' + product.id">
+     <smallest-card
+       :name="product.name"
+       :thumbnail="product.thumbnail"
+       :price="product.price"
+       :description="product.description"
+       type="product" />
+   </nuxt-link>
      </div>
 
-   </div>  
+   </div>
  </div>
 </template>
 
 <script>
-import establishmentLayout from "../../layouts/establishmentLayout";
-import SmallestCard from "../../components/SmallestCard";
+// Fait par Juliette
+import establishmentLayout from "../../../layouts/establishmentLayout";
+import SmallestCard from "../../../components/SmallestCard";
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import axios from "axios";
@@ -54,8 +55,6 @@ export default  {
         infinite: false,
         arrows: false,
         dots: false,
-        centerMode: true,
-        centerPadding: '20px'
       }
     }
   },
@@ -65,7 +64,7 @@ components:{
   },
   beforeMount () {
 
- 
+
 window.addEventListener('scroll', this.handleScroll);
   },
   beforeDestroy() {
@@ -73,9 +72,11 @@ window.addEventListener('scroll', this.handleScroll);
   },
 
   mounted() {
-    axios.get('http://127.0.0.1:8000/api/establishment/imperio-bar')
+    axios.get('http://127.0.0.1:8000/api/establishment/' + this.$route.params.slug)
       .then((response) => {
-      this.establishment = response.data
+       this.establishment = response.data
+        this.$store.commit('changeEstablishmentName', response.data.name)
+        this.$store.commit('changeEstablishmentThumbnail', response.data.thumbnail.path)
       })
   },
 
@@ -95,14 +96,17 @@ window.addEventListener('scroll', this.handleScroll);
 <style lang="scss" scoped>
 @import './assets/scss/tools/variables';
 .header_establishment {
-  height:350px;
+  height:350px!important;
+  overflow: hidden;
   .slick-container {
     height: 100%!important;
   }
   .slick-slider, .slick-list, .slick-track {
-    height: 100%!important;
+    height: 350px!important;
     img {
       object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
   }
 }
@@ -113,7 +117,7 @@ window.addEventListener('scroll', this.handleScroll);
   margin-top: -64px;
   padding:32px 24px;
   position: relative;
-  z-index: 9;
+  z-index: 99;
   h2 {
     color:white;
     font-family: var(--title);

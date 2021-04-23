@@ -3,66 +3,88 @@
     <div class="establishment_block">
       <div class="head_block">
         <h2>A la une</h2>
-        <a href="#">Tout voir</a>
       </div>
-      <Radio />
-      <Quantity />
       <div class="block_listing">
         <VueSlickCarousel v-bind="settings" v-if="establishmentsFeatured.length">
           <div v-for= "item in establishmentsFeatured">
             <!-- {{establishmentsFeatured}} -->
-
             <!-- Définition des paramètres à afficher dans le carrousel de card-establishment -->
-            <card-establishment 
-              :name="item.name"
-              :rating="item.rating"
-              :thumbnail="item.thumbnail"
-              :lat="item.lat"
-              :long="item.long"
-              :tags="item.tags"
-            />
+            <nuxt-link :to="'/bars/' + item.slug">  <!-- Lien vers la page du bar -->
+              <card-establishment
+                :name="item.name"
+                :rating="item.rating"
+                :thumbnail="item.thumbnail"
+                :lat="item.lat"
+                :long="item.long"
+                :tags="item.tags"
+              />
+            </nuxt-link>
           </div>
-            </VueSlickCarousel>
-
-        <!-- Second carrousel pour moods -->
-        <div class="block_listing">
-        <VueSlickCarousel v-bind="settings" v-if="establishmentsMoods.length">
-          <div v-for= "moods in establishmentsMoods">
-            <!-- {{establishmentsMoods}} -->
-
-            <!-- Définition des paramètres à afficher dans le carrousel establishmentMoods -->
-            <card-establishment 
-              :name="moods.name"
-              :rating="moods.rating"
-              :thumbnail="moods.thumbnail"
-              :lat="moods.lat"
-              :long="moods.long"
-              :tags="moods.tags"
-            />
-          </div>
-            </VueSlickCarousel>
-
+        </VueSlickCarousel>
       </div>
     </div>
-    <SmallestCard></SmallestCard>
+
+    <div class="establishment_block">
+      <div class="head_block">
+        <h2>Nos meilleures adresses</h2>
+      </div>
+      <div class="block_listing">
+        <VueSlickCarousel v-bind="settings" v-if="establishmentsMoods.length">
+          <div v-for= "item in establishmentsMoods">
+            <!-- {{establishmentsMoods}} -->
+            <!-- Définition des paramètres à afficher dans le carrousel de card-establishment -->
+            <nuxt-link :to="'/bars/' + item.slug"> <!-- Lien vers la page du bar -->
+              <card-establishment
+                :name="item.name"
+                :rating="item.rating"
+                :thumbnail="item.thumbnail"
+                :lat="item.lat"
+                :long="item.long"
+                :tags="item.tags"
+              />
+            </nuxt-link>
+          </div>
+        </VueSlickCarousel>
+      </div>
     </div>
+
+
+    <div class="establishment_block">
+      <div class="block_listing">
+        <nuxt-link v-for="item in establishments" :to="'/bars/' + item.slug" class="link-card">
+          <SmallestCard
+                        :name="item.name"
+                        :rating="item.rating"
+                        :thumbnail="item.thumbnail"
+                        :lat="item.lat"
+                        :long="item.long"
+                        :tags="item.tags"
+                        type="establishment"
+          />
+        </nuxt-link>
+      </div>
+    </div>
+
+
+
+
   </div>
-</template>  
+  <!-- Second carrousel pour moods -->
+</template>
 
 <script>
+// Fait par Appoline
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import SmallestCard from "../components/SmallestCard";
 import cardEstablishment from "../components/cardEstablishment.vue";
-import Radio from "../components/Radio.vue";
-import Quantity from "../components/Quantity.vue";
 import axios from 'axios';
 export default {
   data() {
     return {
       establishmentsFeatured: [],
       establishmentsMoods: [],
-
+      establishments: [],
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -79,24 +101,41 @@ export default {
     SmallestCard,
     cardEstablishment,
     VueSlickCarousel,
-    Radio,
-    Quantity,
   },
-mounted() {
-    // cardEstablishment
-    axios.get('http://localhost:8000/api/establishments/featured')
+  mounted() {
+    axios.all([
+      axios.get('http://localhost:8000/api/establishments/featured')
+        .then((response) => {
+          this.establishmentsFeatured = response.data;
+        }),
+      axios.get('http://localhost:8000/api/establishments/moods')
+        .then((response) => {
+          this.establishmentsMoods = response.data
+        }),
+      axios.get('http://localhost:8000/api/establishments')
+        .then((response) => {
+          this.establishments = response.data
+        })
+    ])
+      .then(axios.spread((responseFeatured, responseMoods, response) => {
+        this.establishmentsFeatured = responseFeatured.data;
+        this.establishmentsMoods = responseMoods.data;
+        this.establishments = response.data;
+      }));
+
+    // establishmentsFeatured
+    /* axios.get('http://localhost:8000/api/establishments/featured')
       .then((response) => {
-        this.establishmentsFeatured = response.data
-      })
+        this.establishmentsFeatured = response.data;
+      });
 
-  // moods
-//     axios.get('http://localhost:8000/api/establishments/moods')
-//       .then((response) => {
-//         this.establishmentsMoods = response.data
-//       })
-//   }
-// }
-
+    // establishmentsMoods
+     axios.get('http://localhost:8000/api/establishments/moods')
+       .then((response) => {
+         this.establishmentsMoods = response.data
+       }); */
+  }
+}
 
 </script>
 
@@ -104,7 +143,7 @@ mounted() {
 @import './assets/scss/tools/variables';
 
 .app_layout {
-  padding: 0px 16px;
+  padding: 0 16px;
   width: 100vw;
   overflow-x: hidden;
 }
@@ -126,5 +165,10 @@ mounted() {
       color:var(--textGray);
     }
   }
+}
+.link-card {
+  position: relative;
+  padding-bottom: 24px;
+  display: block;
 }
 </style>

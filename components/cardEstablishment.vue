@@ -18,19 +18,19 @@
             <!-- Nom du bar -->
             <h2>{{name}}</h2>
             <!-- Localisation -->
-            <span></span>
+          <span>{{ distanceEstablishment | kilometers }} -</span>
             <!-- Tags : correspond aux "spécialités du bar" -->
-            <div v-for= "tags in tags">
+            <span v-for= "tags in tags">
                 <span>{{tags.name}}</span>
-            </div>
+            </span>
         </div>
 
     <!-- Badge correspond au composant affichant la note du bar en question -->
-      <Badge 
+      <Badge
         :rating=rating
-      /> 
+      />
 
-    </div> 
+    </div>
 
 </div>
 
@@ -41,13 +41,53 @@
 
 <!-- Script vue.js -->
 <script>
-
+// Fait par Appoline
+    import turf from "turf";
+    import Badge from "./Badge";
     export default{
         // Récupération des paramètres définis dans index.vue
         props: ['name', 'rating', 'thumbnail', 'long', 'lat', 'tags'],
-    }
-    import Badge from "./Badge";
 
+      data() {
+          return {
+            distanceEstablishment: ''
+          }
+      },
+      components: {
+          Badge
+      },
+      created() {
+        if (typeof global.navigator === 'undefined') global.navigator = {};
+        if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              var from = {
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [position.coords.longitude, position.coords.latitude]
+                }
+              };
+              var to = {
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [this.$props.long, this.$props.lat]
+                }
+              };
+              this.distanceEstablishment = turf.distance(from, to, 'kilometers').toFixed([2]);
+            }
+          );
+        }
+      },
+
+      filters: {
+        kilometers: function (value) {
+          return 'à ' + value + ' km'
+        }
+      }
+
+    }
 
 </script>
 
@@ -93,7 +133,7 @@
 }
 
 
-</style> 
+</style>
 
 <!-- Déclarer une variable en css
 color : var(--textGray); -->

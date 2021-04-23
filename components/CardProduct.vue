@@ -1,19 +1,25 @@
 <template>
   <div class="product-card">
-    <span class="quantity">1x</span>
+    <span class="quantity">{{ quantity }}x</span>
     <div class="datas">
-      <h2>Vin Blanc</h2>
-      <p>25cl - Tariquet Classique</p>
+      <h2>{{ name }}</h2>
+      <p>{{ attribute }}</p>
     </div>
     <div class="price">
-      <p>8,50€</p>
+      <p>{{ price | price }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import Badge from "./Badge";
+
 export default {
+  props: ['name', 'price', 'attribute', 'thumbnail','quantity'],
+  filters: {
+    price(value) {
+      return value + ' €'
+    }
+  }
 
 }
 </script>
@@ -30,7 +36,11 @@ export default {
   grid-template-areas:
     "quantity product price";
   align-items: flex-start;
-  padding-bottom: 12px;
+  padding-top: 12px;
+  padding-bottom: 8px;
+  &:first-child {
+    padding-top: 0;
+  }
 }
 
 .quantity {

@@ -2,29 +2,33 @@
   <div>
     <div class="card_order">
       <div class="order_establishment_thumb">
-        <img src="https://source.unsplash.com/random/100x100" alt="">
+        <img :src="thumbnail" :alt="'Image du bar' + establishment.name">
       </div>
       <div class="order_establishment">
         <h2>{{establishment}}</h2>
-        <span>3 boissons</span>
         <span>{{ date }}</span>
         <span v-if="status===0">Annulée</span>
            <span v-else>Terminée</span>
       </div>
       <div class="order_actions">
-        <Button label="Voir" type="small" to="978"/>
+        <Button label="Voir" type="small" @click.native="showOrder(id)" />
       </div>
     </div>
-  
+
   </div>
 </template>
 <script>
 import Button from "./Button";
 export default {
-  props:['establishment', 'date','status'],
+  props:['establishment', 'date','status','thumbnail','id'],
   components: {
     Button
   },
+  methods: {
+    showOrder(id) {
+      this.$router.push('/profile/commande/' + id)
+    }
+  }
 }
 </script>
 
@@ -82,4 +86,3 @@ export default {
   }
 }
 </style>
-  
