@@ -1,13 +1,11 @@
 <template>
-  <button class="Button">Voir le panier</button>
+  <button class="Button">{{label}}</button>
 </template>
 
 <script>
 import Badge from "./Badge";
 export default {
-  components: {
-    Badge,
-  }
+ props:['label','type']
 }
 </script>
 

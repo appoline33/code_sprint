@@ -1,18 +1,20 @@
 <template>
   <div class="smallest_card">
     <div class="card_thumbnail">
-      <img src="https://source.unsplash.com/random/300x190" alt="Image du bar l'austra">
+      <img src=thumbnails alt="Image du bar">
     </div>
     <div class="card_datas">
       <Badge />
-      <h3>L'austra</h3>
-      <p>à 3,8 km - Cocktail</p>
+      <h3>{{name}}</h3>
+      <p>{{description}}</p>
+      <p>{{price}}</p>
     </div>
   </div>
 </template>
 <script>
 import Badge from "./Badge";
-export default {
+export default  {
+    props:['name', 'thumbnail', 'price', 'description'],
   components: {
     Badge,
   }
